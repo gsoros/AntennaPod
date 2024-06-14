@@ -35,35 +35,38 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
 import de.danoeh.antennapod.R;
-import de.danoeh.antennapod.core.preferences.ThemeSwitcher;
-import de.danoeh.antennapod.core.receiver.MediaButtonReceiver;
-import de.danoeh.antennapod.core.sync.queue.SynchronizationQueueSink;
-import de.danoeh.antennapod.core.util.download.FeedUpdateManager;
-import de.danoeh.antennapod.dialog.RatingDialog;
+import de.danoeh.antennapod.net.download.service.feed.FeedUpdateManagerImpl;
+import de.danoeh.antennapod.net.download.serviceinterface.FeedUpdateManager;
+import de.danoeh.antennapod.net.sync.serviceinterface.SynchronizationQueueSink;
+import de.danoeh.antennapod.ui.appstartintent.MediaButtonStarter;
+import de.danoeh.antennapod.ui.common.ThemeSwitcher;
+import de.danoeh.antennapod.ui.screen.rating.RatingDialogManager;
 import de.danoeh.antennapod.event.EpisodeDownloadEvent;
 import de.danoeh.antennapod.event.FeedUpdateRunningEvent;
 import de.danoeh.antennapod.event.MessageEvent;
-import de.danoeh.antennapod.fragment.AddFeedFragment;
-import de.danoeh.antennapod.fragment.AllEpisodesFragment;
-import de.danoeh.antennapod.fragment.AudioPlayerFragment;
-import de.danoeh.antennapod.fragment.CompletedDownloadsFragment;
-import de.danoeh.antennapod.fragment.DownloadLogFragment;
-import de.danoeh.antennapod.fragment.FeedItemlistFragment;
-import de.danoeh.antennapod.fragment.InboxFragment;
-import de.danoeh.antennapod.fragment.NavDrawerFragment;
-import de.danoeh.antennapod.fragment.PlaybackHistoryFragment;
-import de.danoeh.antennapod.fragment.QueueFragment;
-import de.danoeh.antennapod.fragment.SearchFragment;
-import de.danoeh.antennapod.fragment.SubscriptionFragment;
-import de.danoeh.antennapod.fragment.TransitionEffect;
+import de.danoeh.antennapod.ui.screen.AddFeedFragment;
+import de.danoeh.antennapod.ui.screen.AllEpisodesFragment;
+import de.danoeh.antennapod.ui.screen.playback.audio.AudioPlayerFragment;
+import de.danoeh.antennapod.ui.screen.download.CompletedDownloadsFragment;
+import de.danoeh.antennapod.ui.screen.download.DownloadLogFragment;
+import de.danoeh.antennapod.ui.screen.feed.FeedItemlistFragment;
+import de.danoeh.antennapod.ui.screen.InboxFragment;
+import de.danoeh.antennapod.ui.screen.drawer.NavDrawerFragment;
+import de.danoeh.antennapod.ui.screen.PlaybackHistoryFragment;
+import de.danoeh.antennapod.ui.screen.queue.QueueFragment;
+import de.danoeh.antennapod.ui.screen.SearchFragment;
+import de.danoeh.antennapod.ui.screen.subscriptions.SubscriptionFragment;
+import de.danoeh.antennapod.ui.TransitionEffect;
 import de.danoeh.antennapod.model.download.DownloadStatus;
 import de.danoeh.antennapod.net.download.serviceinterface.DownloadServiceInterface;
 import de.danoeh.antennapod.playback.cast.CastEnabledActivity;
+import de.danoeh.antennapod.storage.importexport.AutomaticDatabaseExportWorker;
 import de.danoeh.antennapod.storage.preferences.UserPreferences;
 import de.danoeh.antennapod.ui.appstartintent.MainActivityStarter;
 import de.danoeh.antennapod.ui.common.ThemeUtils;
-import de.danoeh.antennapod.ui.home.HomeFragment;
-import de.danoeh.antennapod.view.LockableBottomSheetBehavior;
+import de.danoeh.antennapod.ui.discovery.DiscoveryFragment;
+import de.danoeh.antennapod.ui.screen.home.HomeFragment;
+import de.danoeh.antennapod.ui.view.LockableBottomSheetBehavior;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
 import org.greenrobot.eventbus.EventBus;
@@ -86,7 +89,6 @@ public class MainActivity extends CastEnabledActivity {
 
     public static final String EXTRA_FEED_ID = "fragment_feed_id";
     public static final String EXTRA_REFRESH_ON_START = "refresh_on_start";
-    public static final String EXTRA_STARTED_FROM_SEARCH = "started_from_search";
     public static final String EXTRA_ADD_TO_BACK_STACK = "add_to_back_stack";
     public static final String KEY_GENERATED_VIEW_ID = "generated_view_id";
 
@@ -165,11 +167,12 @@ public class MainActivity extends CastEnabledActivity {
         sheetBehavior.setHideable(false);
         sheetBehavior.setBottomSheetCallback(bottomSheetCallback);
 
-        FeedUpdateManager.restartUpdateAlarm(this, false);
+        FeedUpdateManager.getInstance().restartUpdateAlarm(this, false);
         SynchronizationQueueSink.syncNowIfNotSyncedRecently();
+        AutomaticDatabaseExportWorker.enqueueIfNeeded(this, false);
 
         WorkManager.getInstance(this)
-                .getWorkInfosByTagLiveData(FeedUpdateManager.WORK_TAG_FEED_UPDATE)
+                .getWorkInfosByTagLiveData(FeedUpdateManagerImpl.WORK_TAG_FEED_UPDATE)
                 .observe(this, workInfos -> {
                     boolean isRefreshingFeeds = false;
                     for (WorkInfo workInfo : workInfos) {
@@ -241,8 +244,9 @@ public class MainActivity extends CastEnabledActivity {
         outState.putInt(KEY_GENERATED_VIEW_ID, View.generateViewId());
     }
 
-    private final BottomSheetBehavior.BottomSheetCallback bottomSheetCallback =
-            new BottomSheetBehavior.BottomSheetCallback() {
+    private final BottomSheetBehavior.BottomSheetCallback bottomSheetCallback = new AntennaPodBottomSheetCallback();
+
+    private class AntennaPodBottomSheetCallback extends BottomSheetBehavior.BottomSheetCallback {
         @Override
         public void onStateChanged(@NonNull View view, int state) {
             if (state == BottomSheetBehavior.STATE_COLLAPSED) {
@@ -266,7 +270,7 @@ public class MainActivity extends CastEnabledActivity {
 
             audioPlayer.fadePlayerToToolbar(slideOffset);
         }
-    };
+    }
 
     public void setupToolbarToggle(@NonNull MaterialToolbar toolbar, boolean displayUpArrow) {
         if (drawerLayout != null) { // Tablet layout does not have a drawer
@@ -290,7 +294,7 @@ public class MainActivity extends CastEnabledActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (drawerLayout != null) {
+        if (drawerLayout != null && drawerToggle != null) {
             drawerLayout.removeDrawerListener(drawerToggle);
         }
     }
@@ -298,7 +302,7 @@ public class MainActivity extends CastEnabledActivity {
     private void checkFirstLaunch() {
         SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         if (prefs.getBoolean(PREF_IS_FIRST_LAUNCH, true)) {
-            FeedUpdateManager.restartUpdateAlarm(this, true);
+            FeedUpdateManager.getInstance().restartUpdateAlarm(this, true);
 
             SharedPreferences.Editor edit = prefs.edit();
             edit.putBoolean(PREF_IS_FIRST_LAUNCH, false);
@@ -344,7 +348,7 @@ public class MainActivity extends CastEnabledActivity {
         return recycledViewPool;
     }
 
-    public void loadFragment(String tag, Bundle args) {
+    public Fragment createFragmentInstance(String tag, Bundle args) {
         Log.d(TAG, "loadFragment(tag: " + tag + ", args: " + args + ")");
         Fragment fragment;
         switch (tag) {
@@ -372,19 +376,24 @@ public class MainActivity extends CastEnabledActivity {
             case SubscriptionFragment.TAG:
                 fragment = new SubscriptionFragment();
                 break;
+            case DiscoveryFragment.TAG:
+                fragment = new DiscoveryFragment();
+                break;
             default:
                 // default to home screen
                 fragment = new HomeFragment();
-                tag = HomeFragment.TAG;
                 args = null;
                 break;
         }
-
         if (args != null) {
             fragment.setArguments(args);
         }
+        return fragment;
+    }
+
+    public void loadFragment(String tag, Bundle args) {
         NavDrawerFragment.saveLastNavFragment(this, tag);
-        loadFragment(fragment);
+        loadFragment(createFragmentInstance(tag, args));
     }
 
     public void loadFeedFragmentById(long feedId, Bundle args) {
@@ -396,7 +405,7 @@ public class MainActivity extends CastEnabledActivity {
         loadFragment(fragment);
     }
 
-    private void loadFragment(Fragment fragment) {
+    public void loadFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         // clear back stack
         for (int i = 0; i < fragmentManager.getBackStackEntryCount(); i++) {
@@ -422,17 +431,14 @@ public class MainActivity extends CastEnabledActivity {
         Validate.notNull(fragment);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        switch (transition) {
-            case FADE:
-                transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
-                break;
-            case SLIDE:
-                transaction.setCustomAnimations(
-                        R.anim.slide_right_in,
-                        R.anim.slide_left_out,
-                        R.anim.slide_left_in,
-                        R.anim.slide_right_out);
-                break;
+        if (transition == TransitionEffect.FADE) {
+            transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        } else if (transition == TransitionEffect.SLIDE) {
+            transaction.setCustomAnimations(
+                    R.anim.slide_right_in,
+                    R.anim.slide_left_out,
+                    R.anim.slide_left_in,
+                    R.anim.slide_right_out);
         }
 
         transaction
@@ -493,14 +499,13 @@ public class MainActivity extends CastEnabledActivity {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-        RatingDialog.init(this);
+        new RatingDialogManager(this).showIfNeeded();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         handleNavIntent();
-        RatingDialog.check();
 
         if (lastTheme != ThemeSwitcher.getNoTitleTheme(this)) {
             finish();
@@ -551,7 +556,7 @@ public class MainActivity extends CastEnabledActivity {
 
     @Override
     public void onBackPressed() {
-        if (isDrawerOpen()) {
+        if (isDrawerOpen() && drawerLayout != null) {
             drawerLayout.closeDrawer(navDrawer);
         } else if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -589,9 +594,8 @@ public class MainActivity extends CastEnabledActivity {
             long feedId = intent.getLongExtra(EXTRA_FEED_ID, 0);
             Bundle args = intent.getBundleExtra(MainActivityStarter.EXTRA_FRAGMENT_ARGS);
             if (feedId > 0) {
-                boolean startedFromSearch = intent.getBooleanExtra(EXTRA_STARTED_FROM_SEARCH, false);
                 boolean addToBackStack = intent.getBooleanExtra(EXTRA_ADD_TO_BACK_STACK, false);
-                if (startedFromSearch || addToBackStack) {
+                if (addToBackStack) {
                     loadChildFragment(FeedItemlistFragment.newInstance(feedId));
                 } else {
                     loadFeedFragmentById(feedId, args);
@@ -602,7 +606,12 @@ public class MainActivity extends CastEnabledActivity {
             String tag = intent.getStringExtra(MainActivityStarter.EXTRA_FRAGMENT_TAG);
             Bundle args = intent.getBundleExtra(MainActivityStarter.EXTRA_FRAGMENT_ARGS);
             if (tag != null) {
-                loadFragment(tag, args);
+                Fragment fragment = createFragmentInstance(tag, args);
+                if (intent.getBooleanExtra(MainActivityStarter.EXTRA_ADD_TO_BACK_STACK, false)) {
+                    loadChildFragment(fragment);
+                } else {
+                    loadFragment(fragment);
+                }
             }
             sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         } else if (intent.getBooleanExtra(MainActivityStarter.EXTRA_OPEN_PLAYER, false)) {
@@ -619,7 +628,7 @@ public class MainActivity extends CastEnabledActivity {
             new DownloadLogFragment().show(getSupportFragmentManager(), null);
         }
         if (intent.getBooleanExtra(EXTRA_REFRESH_ON_START, false)) {
-            FeedUpdateManager.runOnceOrAsk(this);
+            FeedUpdateManager.getInstance().runOnceOrAsk(this);
         }
         // to avoid handling the intent twice when the configuration changes
         setIntent(new Intent(MainActivity.this, MainActivity.class));
@@ -749,7 +758,7 @@ public class MainActivity extends CastEnabledActivity {
         }
 
         if (customKeyCode != null) {
-            sendBroadcast(MediaButtonReceiver.createIntent(this, customKeyCode));
+            sendBroadcast(MediaButtonStarter.createIntent(this, customKeyCode));
             return true;
         }
         return super.onKeyUp(keyCode, event);

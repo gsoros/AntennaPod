@@ -67,7 +67,6 @@
   <string name="description_label">Aprašymas</string>
   <string name="shownotes_label">Laidos užrašai</string>
   <string name="shownotes_contentdescription">jei norite skaityti laidos užrašus, perbraukite pirštu į viršų</string>
-  <string name="episodes_suffix">\u0020epizodai</string>
   <string name="close_label">Užverti</string>
   <string name="retry_label">Bandyti vėl</string>
   <string name="auto_download_label">Įtraukti į automatinius atsiuntimus</string>
@@ -116,7 +115,6 @@
   <string name="rename_feed_label">Pervadinti tinklalaidę</string>
   <string name="remove_feed_label">Pašalinti tinklalaidę</string>
   <string name="share_label">Dalintis</string>
-  <string name="share_rss_address_label">RSS adresas:</string>
   <string name="feed_remover_msg">Tinklalaidė šalinama</string>
   <string name="load_complete_feed">Atnaujinti visą tinklalaidę</string>
   <string name="multi_select">Pažymėti keletą</string>
@@ -146,7 +144,6 @@
   <string name="pause_label">Pristabdyti</string>
   <string name="stream_label">Klausytis tiesiogiai</string>
   <string name="delete_label">Ištrinti</string>
-  <string name="delete_failed">Nepavyksta ištrinti failo. Įrenginio paleidimas iš naujo gali padėti.</string>
   <plurals name="deleted_multi_episode_batch_label">
     <item quantity="one">1 atsiųstas epizodas ištrintas.</item>
     <item quantity="few">%d atsiųsti epizodai ištrinti.</item>
@@ -221,10 +218,6 @@
   <string name="confirm_mobile_streaming_button_always">Visada</string>
   <string name="confirm_mobile_streaming_button_once">Vienąkart</string>
   <!--Mediaplayer messages-->
-  <string name="playback_error_server_died">Serveris nepasiekiamas</string>
-  <string name="playback_error_unsupported">Nepalaikomas medijos tipas</string>
-  <string name="playback_error_timeout">Baigėsi operacijai skirtas laikas</string>
-  <string name="playback_error_source">Prieiga prie medijos failo negalima</string>
   <string name="no_media_playing_label">Atkūrimas nevyksta</string>
   <string name="unknown_media_key">„AntennaPod“ – nežinomas medijos klavišas: %1$d</string>
   <string name="error_file_not_found">Failas nerastas</string>
@@ -323,9 +316,6 @@
   <string name="pref_fast_forward_sum">Derinkite, per kiek sekundžių šoktelėti į priekį kai paspaudžiamas persukimo į priekį mygtukas</string>
   <string name="pref_rewind_sum">Derinkite, per kiek sekundžių šoktelėti atgal kai paspaudžiamas atsukimo atgal mygtukas</string>
   <string name="pref_expandNotify_sum">Tai dažniausiai išskleidžia pranešimą, kad būtų rodomi atkūrimo valdymo mygtukai.</string>
-  <string name="pref_compact_notification_buttons_sum">Keisti atkūrimo valdymo mygtukus, matomus, kai pranešimas yra suskleistas. Atkūrimo/pristabdymo mygtukas matomas visada.</string>
-  <string name="pref_compact_notification_buttons_dialog_title">Pasirinkite daugiausiai %1$d elementus</string>
-  <string name="pref_compact_notification_buttons_dialog_error">Galite pasirinkti daugiausiai %1$d elementus.</string>
   <string name="pref_enqueue_location_sum">Epizodus pridėti: %1$s</string>
   <string name="enqueue_location_back">Į galą</string>
   <string name="enqueue_location_front">Į pradžią</string>
@@ -388,7 +378,6 @@
   <string name="database_import_summary">Importuoti „AntennaPod“ duomenų bazę iš kito įrenginio</string>
   <string name="opml_import_label">OPML importas</string>
   <string name="opml_add_podcast_label">Importuoti tinklalaidžių sąrašą (OPML)</string>
-  <string name="opml_reader_error">Skaitant OPML failą įvyko klaida:</string>
   <string name="opml_import_error_no_file">Nepasirinktas failas!</string>
   <string name="select_all_label">Pažymėti visus</string>
   <string name="deselect_all_label">Nepažymėti nieko</string>
@@ -470,6 +459,7 @@
   <string name="choose_data_directory_message">Prašome pasirinkti pamatinį duomenų aplanką. „AntennaPod“ sukurs reikiamus poaplankius.</string>
   <string name="choose_data_directory_available_space">%1$s iš %2$s laisva</string>
   <string name="pref_pausePlaybackForFocusLoss_sum">Kai kita programėlė nori atkurti garsus, pristabdyti atkūrimą vietoje garsio sumažinimo</string>
+  <!--Rating dialog-->
   <!--Online feed view-->
   <string name="subscribe_label">Prenumeruoti</string>
   <string name="subscribing_label">Prenumeruojama...</string>
@@ -494,7 +484,6 @@
   <string name="authentication_descr">Keisti vartotojo vardą ir slaptažodį šiai tinklalaidei ir jos epizodams.</string>
   <string name="feed_tags_label">Žymės</string>
   <string name="feed_tags_summary">Keisti tinklalaidės žymes, kad palengvinti prenumeratų tvarkymą</string>
-  <string name="multi_feed_common_tags_info">{fa-info-circle} Rodomos tik žymės, bendros visoms pažymėtoms prenumeratoms. Kitos žymės liks nepaveiktos.</string>
   <string name="episode_filters_description">Žodžių ar frazių sąrašas, kuriuo remiantis sprendžiama, ar epizodas turėtų būti įtrauktas ar išbrauktas iš automatiškai atsiunčiamų epizodų</string>
   <string name="keep_updated_summary">Įtraukti šią tinklalaidę į (automatinį) visų tinklalaidžių atnaujinimą</string>
   <string name="auto_download_disabled_globally">Automatinis atsiuntimas išjungtas pagrindiniuose „AntennaPod“ nustatymuose</string>
@@ -504,14 +493,13 @@
   <string name="statistics_space_used">Naudojama disko vieta:</string>
   <string name="statistics_episodes_started_total">Pradėti epizodai/iš viso:</string>
   <string name="statistics_view_all">Žiūrėti visoms tinklalaidėms »</string>
+  <!--Podcast release schedules-->
   <!--AntennaPodSP-->
   <string name="sp_apps_importing_feeds_msg">Įkeliamos prenumeratos iš specializuotų programėlių...</string>
   <!--Add podcast fragment-->
   <string name="search_podcast_hint">Ieškoti tinklalaidės...</string>
   <string name="search_fyyd_label">Ieškoti „fyyd“</string>
-  <string name="gpodnet_search_hint">Ieškoti „gpodder.net“ svetainėje</string>
   <string name="advanced">Išplėstinis</string>
-  <string name="add_podcast_by_url">Pridėti tinklalaidės RSS srauto adresą</string>
   <string name="discover">Atraskite</string>
   <string name="discover_hide">Slėpti</string>
   <string name="discover_is_hidden">Pasirinkote slėpti pasiūlymus.</string>
@@ -537,21 +525,6 @@
   <string name="not_paused">Ne pristabdyti</string>
   <string name="hide_played_episodes_label">Perklausyti</string>
   <string name="not_played">Neperklausyti</string>
-  <!--Sort-->
-  <string name="sort_title_a_z">Pavadinimas (A \u2192 Z)</string>
-  <string name="sort_title_z_a">Pavadinimas (Z \u2192 A)</string>
-  <string name="sort_date_new_old">Data (Nauji \u2192 Seni)</string>
-  <string name="sort_date_old_new">Data (Seni \u2192 Nauji)</string>
-  <string name="sort_duration_short_long">Trukmė (Trumpi \u2192 Ilgi)</string>
-  <string name="sort_duration_long_short">Trukmė (Ilgi \u2192 Trumpi)</string>
-  <string name="sort_filename_a_z">Failo vardas (A \u2192 Z)</string>
-  <string name="sort_filename_z_a">Failo vardas (Z \u2192 A)</string>
-  <string name="sort_a_z">A \u2192 Z</string>
-  <string name="sort_z_a">Z \u2192 A</string>
-  <string name="sort_new_old">Nauji \u2192 Seni</string>
-  <string name="sort_old_new">Seni \u2192 Nauji</string>
-  <string name="sort_short_long">Trumpi \u2192 Ilgi</string>
-  <string name="sort_long_short">Ilgi \u2192 Trumpi</string>
   <!--Share episode dialog-->
   <string name="share_playback_position_dialog_label">Įtraukti atkūrimo poziciją</string>
   <string name="share_dialog_episode_website_label">Epizodo tinklalapiu</string>

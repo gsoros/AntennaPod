@@ -1,8 +1,9 @@
 package de.danoeh.antennapod.ui.statistics.subscriptions;
 
+import android.text.format.DateFormat;
 import androidx.fragment.app.Fragment;
-import de.danoeh.antennapod.core.storage.StatisticsItem;
-import de.danoeh.antennapod.core.util.Converter;
+import de.danoeh.antennapod.storage.database.StatisticsItem;
+import de.danoeh.antennapod.ui.common.Converter;
 import de.danoeh.antennapod.ui.statistics.PieChartView;
 import de.danoeh.antennapod.ui.statistics.R;
 import de.danoeh.antennapod.ui.statistics.StatisticsListAdapter;
@@ -39,7 +40,8 @@ public class PlaybackStatisticsListAdapter extends StatisticsListAdapter {
         if (includeMarkedAsPlayed) {
             return context.getString(R.string.statistics_counting_total);
         }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM yyyy", Locale.getDefault());
+        String skeleton = DateFormat.getBestDateTimePattern(Locale.getDefault(), "MMM yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(skeleton, Locale.getDefault());
         String dateFrom = dateFormat.format(new Date(timeFilterFrom));
         // FilterTo is first day of next month => Subtract one day
         String dateTo = dateFormat.format(new Date(timeFilterTo - 24L * 3600000L));

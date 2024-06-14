@@ -2,8 +2,8 @@ package de.danoeh.antennapod.net.discovery;
 
 import android.content.Context;
 import android.util.Log;
-import de.danoeh.antennapod.core.service.download.AntennapodHttpClient;
 import de.danoeh.antennapod.model.feed.Feed;
+import de.danoeh.antennapod.net.common.AntennapodHttpClient;
 import okhttp3.CacheControl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -58,7 +58,8 @@ public class ItunesTopListLoader {
             List<PodcastSearchResult> suggestedPodcasts, List<Feed> subscribedFeeds, int limit) {
         Set<String> subscribedPodcastsSet = new HashSet<>();
         for (Feed subscribedFeed : subscribedFeeds) {
-            if (subscribedFeed.getTitle() != null && subscribedFeed.getAuthor() != null) {
+            if (subscribedFeed.getTitle() != null && subscribedFeed.getAuthor() != null
+                    && subscribedFeed.getState() == Feed.STATE_SUBSCRIBED) {
                 subscribedPodcastsSet.add(subscribedFeed.getTitle().trim() + " - " + subscribedFeed.getAuthor().trim());
             }
         }

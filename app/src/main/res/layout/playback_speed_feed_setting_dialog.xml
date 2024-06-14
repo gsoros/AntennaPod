@@ -19,7 +19,7 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <de.danoeh.antennapod.view.PlaybackSpeedSeekBar
+        <de.danoeh.antennapod.ui.screen.playback.PlaybackSpeedSeekBar
             android:id="@+id/seekBar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -33,5 +33,11 @@
             android:layout_marginLeft="8dp" />
 
     </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/skipSilenceFeed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pref_skip_silence_title" />
 
 </LinearLayout>

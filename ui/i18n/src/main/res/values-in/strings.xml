@@ -87,7 +87,6 @@
   <string name="description_label">Keterangan</string>
   <string name="shownotes_label">Catatan acara</string>
   <string name="shownotes_contentdescription">Gesek ke atas untuk membaca catatan acara</string>
-  <string name="episodes_suffix">\u0020episode</string>
   <string name="close_label">Tutup</string>
   <string name="retry_label">Coba lagi</string>
   <string name="auto_download_label">Sertakan di unduh otomatis</string>
@@ -126,7 +125,6 @@
   <string name="rename_feed_label">Ubah nama podcast</string>
   <string name="remove_feed_label">Hapus podcast</string>
   <string name="share_label">Bagikan</string>
-  <string name="share_rss_address_label">Alamat RSS:</string>
   <string name="feed_remover_msg">Menghapus podcast</string>
   <string name="load_complete_feed">Segarkan podcast selesai</string>
   <string name="multi_select">Pilih banyak</string>
@@ -152,7 +150,6 @@
   <string name="pause_label">Jeda</string>
   <string name="stream_label">Streaming</string>
   <string name="delete_label">Hapus</string>
-  <string name="delete_failed">Tidak dapat menghapus berkas. Mem-boot ulang perangkat mungkin membantu.</string>
   <plurals name="deleted_multi_episode_batch_label">
     <item quantity="other">%depisode terunduh dihapus.</item>
   </plurals>
@@ -222,10 +219,6 @@
   <string name="confirm_mobile_streaming_button_always">Selalu</string>
   <string name="confirm_mobile_streaming_button_once">Sekali</string>
   <!--Mediaplayer messages-->
-  <string name="playback_error_server_died">Server mati</string>
-  <string name="playback_error_unsupported">Tipe media tidak didukung</string>
-  <string name="playback_error_timeout">Masa operasi habis</string>
-  <string name="playback_error_source">Tidak dapat mengakses berkas media</string>
   <string name="no_media_playing_label">Tidak ada media yang dimainkan</string>
   <string name="unknown_media_key">AntennaPod - Kunci media tidak diketahui: %1$d</string>
   <string name="error_file_not_found">Berkas tidak ditemukan</string>
@@ -357,9 +350,6 @@
   <string name="pref_expandNotify_sum">Ini biasanya memperluas notifikasi untuk menunjukkan tombol pemutaran.</string>
   <string name="pref_persistNotify_title">Kontrol pemutaran tetap</string>
   <string name="pref_persistNotify_sum">Tetap tampilkan kontrol pada notifikasi dan layar kunci saat pemutaran dijeda</string>
-  <string name="pref_compact_notification_buttons_sum">Ubah tombol pemutaran ketika notifikasi diciutkan. Tombol main/jeda selalu disertakan.</string>
-  <string name="pref_compact_notification_buttons_dialog_title">Pilih maksimum dari %1$d item</string>
-  <string name="pref_compact_notification_buttons_dialog_error">Anda hanya dapat memilih maksimum dari %1$d item.</string>
   <string name="pref_enqueue_location_sum">Tambah episode ke: %1$s</string>
   <string name="enqueue_location_back">Kembali</string>
   <string name="enqueue_location_front">Depan</string>
@@ -425,7 +415,6 @@
   <string name="database_import_summary">Impor database AntennaPod dari perangkat lain</string>
   <string name="opml_import_label">Impor OPML</string>
   <string name="opml_add_podcast_label">Impor daftar podcast (OPML)</string>
-  <string name="opml_reader_error">Sebuah kesalahan terjadi ketika membaca dokumen OPML:</string>
   <string name="opml_import_error_no_file">Tidak ada berkas yang dipilih!</string>
   <string name="select_all_label">Pilih semua</string>
   <string name="deselect_all_label">Batal pilih semua</string>
@@ -464,7 +453,6 @@
     <item quantity="other">%d jam</item>
   </plurals>
   <string name="auto_enable_label">Aktifkan timer tidur secara otomatis saat menekan \'putar\'</string>
-  <string name="auto_enable_label_with_times">Aktifkan timer tidur secara otomatis saat menekan \'putar\' antara waktu %s dan %s</string>
   <string name="auto_enable_change_times">Ubah jangka waktu</string>
   <string name="sleep_timer_enabled_label">Timer tidur diaktifkan</string>
   <!--Synchronisation-->
@@ -510,6 +498,7 @@
   <string name="choose_data_directory_available_space">%1$s dari %2$s kosong</string>
   <string name="pref_pausePlaybackForFocusLoss_sum">Saat aplikasi lain memutar suara, jeda pemutaran alih-alih menurunkan volume suara.</string>
   <string name="pref_pausePlaybackForFocusLoss_title">Jeda untuk interupsi</string>
+  <!--Rating dialog-->
   <!--Online feed view-->
   <string name="subscribe_label">Langganan</string>
   <string name="subscribing_label">Berlangganan...</string>
@@ -535,7 +524,6 @@
   <string name="authentication_descr">Ubah nama pengguna dan kata sandi untuk podcast ini dan episodenya.</string>
   <string name="feed_tags_label">Label</string>
   <string name="feed_tags_summary">Ganti label podcast ini untuk membantu mengelola langganan Anda</string>
-  <string name="multi_feed_common_tags_info">{fa-info-circle} Hanya label biasa dari langganan yang sudah dipilih yang ditampilkan. Label yang lain tidak terpengaruh.</string>
   <string name="episode_filters_description">Daftar ketentuan yang digunakan untuk memutuskan jika episode sebuah episode harus disertakan atau dikecualikan ketika mengunduh otomatis</string>
   <string name="exclude_terms">Kecualikan episode yang berisikan istilah yang ditentukan di bawah</string>
   <string name="include_terms">Masukkan hanya jika episode berisikan istilah yang ditentukan di bawah</string>
@@ -550,14 +538,13 @@
   <string name="statistics_view_all">Lihat untuk semua podcast »</string>
   <string name="edit_url_menu">Sunting URL umpan</string>
   <string name="edit_url_confirmation_msg">Mengganti alamat RSS dapat merusak status pemutaran dan daftar episode podcast. Kami menyarankan untuk TIDAK mengubahnya dan kami tidak dapat memberikan bantuan jika ada yang salah. Aksi ini tidak dapat dikembalikan. Langganan yang rusak tidak dapat diperbaiki hanya dengan mengganti alamatnya kembali. Sebaiknya buat cadangan jika tetap ingin melanjutkan.</string>
+  <!--Podcast release schedules-->
   <!--AntennaPodSP-->
   <string name="sp_apps_importing_feeds_msg">Impor langganan dari aplikasi bertujuan tunggal...</string>
   <!--Add podcast fragment-->
   <string name="search_podcast_hint">Cari podcast...</string>
   <string name="search_fyyd_label">Cari fyyd</string>
-  <string name="gpodnet_search_hint">Telusur gpodder.net</string>
   <string name="advanced">Lanjutan</string>
-  <string name="add_podcast_by_url">Tambah podcast dari alamat RSS</string>
   <string name="discover">Temukan</string>
   <string name="discover_hide">Sembunyikan</string>
   <string name="discover_is_hidden">Anda memilih untuk menyembunyikan saran.</string>
@@ -586,21 +573,6 @@
   <string name="not_paused">Tidak dijeda</string>
   <string name="hide_played_episodes_label">Diputar</string>
   <string name="not_played">Tidak diputar</string>
-  <!--Sort-->
-  <string name="sort_title_a_z">Judul (A \u2192 Z)</string>
-  <string name="sort_title_z_a">Judul (Z \u2192 A)</string>
-  <string name="sort_date_new_old">Tanggal (Baru \u2192 Lama)</string>
-  <string name="sort_date_old_new">Tanggal (Lama \u2192 Baru)</string>
-  <string name="sort_duration_short_long">Durasi (Pendek \u2192 Panjang)</string>
-  <string name="sort_duration_long_short">Durasi (Pannjang \u2192 Pendek)</string>
-  <string name="sort_filename_a_z">Nama Berkas (A \u2192 Z)</string>
-  <string name="sort_filename_z_a">Nama Berkas (Z \u2192 A)</string>
-  <string name="sort_a_z">A \u2192 Z</string>
-  <string name="sort_z_a">Z \u2192 A</string>
-  <string name="sort_new_old">Baru \u2192 Lama</string>
-  <string name="sort_old_new">Lama \u2192 Baru</string>
-  <string name="sort_short_long">Pendek \u2192 Panjang</string>
-  <string name="sort_long_short">Panjang \u2192 Pendek</string>
   <!--Share episode dialog-->
   <string name="share_playback_position_dialog_label">Juga masukkan posisi pemutaran</string>
   <string name="share_dialog_episode_website_label">Laman web episode</string>
@@ -611,7 +583,6 @@
   <!--Audio controls-->
   <string name="audio_controls">Kontrol audio</string>
   <string name="playback_speed">Kecepatan putar</string>
-  <string name="audio_effects">Efek audio</string>
   <string name="player_switch_to_audio_only">Ganti ke audio saja</string>
   <!--proxy settings-->
   <string name="proxy_type_label">Tipe</string>

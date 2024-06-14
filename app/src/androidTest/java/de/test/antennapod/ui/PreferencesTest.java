@@ -3,18 +3,19 @@ package de.test.antennapod.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+
 import androidx.annotation.StringRes;
 import androidx.preference.PreferenceManager;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import de.danoeh.antennapod.R;
-import de.danoeh.antennapod.activity.PreferenceActivity;
-import de.danoeh.antennapod.core.storage.APCleanupAlgorithm;
-import de.danoeh.antennapod.core.storage.APNullCleanupAlgorithm;
-import de.danoeh.antennapod.core.storage.APQueueCleanupAlgorithm;
-import de.danoeh.antennapod.core.storage.EpisodeCleanupAlgorithm;
-import de.danoeh.antennapod.core.storage.EpisodeCleanupAlgorithmFactory;
-import de.danoeh.antennapod.core.storage.ExceptFavoriteCleanupAlgorithm;
+import de.danoeh.antennapod.ui.screen.preferences.PreferenceActivity;
+import de.danoeh.antennapod.net.download.service.episode.autodownload.APCleanupAlgorithm;
+import de.danoeh.antennapod.net.download.service.episode.autodownload.APNullCleanupAlgorithm;
+import de.danoeh.antennapod.net.download.service.episode.autodownload.APQueueCleanupAlgorithm;
+import de.danoeh.antennapod.net.download.service.episode.autodownload.EpisodeCleanupAlgorithm;
+import de.danoeh.antennapod.net.download.service.episode.autodownload.EpisodeCleanupAlgorithmFactory;
+import de.danoeh.antennapod.net.download.service.episode.autodownload.ExceptFavoriteCleanupAlgorithm;
 import de.danoeh.antennapod.storage.preferences.UserPreferences;
 import de.danoeh.antennapod.storage.preferences.UserPreferences.EnqueueLocation;
 import de.test.antennapod.EspressoTestUtils;
@@ -30,9 +31,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.swipeDown;
 import static androidx.test.espresso.action.ViewActions.swipeUp;
-import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -40,7 +39,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static de.test.antennapod.EspressoTestUtils.clickPreference;
 import static de.test.antennapod.EspressoTestUtils.waitForView;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -80,38 +78,22 @@ public class PreferencesTest {
     }
 
     @Test
-    public void testSetLockscreenButtons() {
+    public void testSetNotificationButtons() {
         clickPreference(R.string.user_interface_label);
-        String[] buttons = res.getStringArray(R.array.compact_notification_buttons_options);
-        clickPreference(R.string.pref_compact_notification_buttons_title);
+        String[] buttons = res.getStringArray(R.array.full_notification_buttons_options);
+        clickPreference(R.string.pref_full_notification_buttons_title);
         // First uncheck checkboxes
-        onView(withText(buttons[0])).perform(click());
-        onView(withText(buttons[1])).perform(click());
-
-        // Now try to check all checkboxes
-        onView(withText(buttons[0])).perform(click());
         onView(withText(buttons[1])).perform(click());
         onView(withText(buttons[2])).perform(click());
-
-        // Make sure that the third checkbox is unchecked
-        onView(withText(buttons[2])).check(matches(not(isChecked())));
-
-        String snackBarText = String.format(res.getString(
-                R.string.pref_compact_notification_buttons_dialog_error), 2);
-        Awaitility.await().ignoreExceptions().atMost(4000, MILLISECONDS)
-                .until(() -> {
-                    onView(withText(snackBarText)).check(doesNotExist());
-                    return true;
-                });
 
         onView(withText(R.string.confirm_label)).perform(click());
 
         Awaitility.await().atMost(1000, MILLISECONDS)
-                .until(UserPreferences::showRewindOnCompactNotification);
+                .until(() -> UserPreferences.showSkipOnFullNotification());
         Awaitility.await().atMost(1000, MILLISECONDS)
-                .until(UserPreferences::showFastForwardOnCompactNotification);
+                .until(() -> UserPreferences.showNextChapterOnFullNotification());
         Awaitility.await().atMost(1000, MILLISECONDS)
-                .until(() -> !UserPreferences.showSkipOnCompactNotification());
+                .until(() -> !UserPreferences.showPlaybackSpeedOnFullNotification());
     }
 
     @Test
@@ -191,11 +173,12 @@ public class PreferencesTest {
     @Test
     public void testAutoDelete() {
         clickPreference(R.string.downloads_pref);
-        final boolean autoDelete = UserPreferences.isAutoDelete();
         onView(withText(R.string.pref_auto_delete_title)).perform(click());
+        final boolean autoDelete = UserPreferences.isAutoDelete();
+        onView(withText(R.string.pref_auto_delete_playback_title)).perform(click());
         Awaitility.await().atMost(1000, MILLISECONDS)
                 .until(() -> autoDelete != UserPreferences.isAutoDelete());
-        onView(withText(R.string.pref_auto_delete_title)).perform(click());
+        onView(withText(R.string.pref_auto_delete_playback_title)).perform(click());
         Awaitility.await().atMost(1000, MILLISECONDS)
                 .until(() -> autoDelete == UserPreferences.isAutoDelete());
     }
@@ -203,8 +186,10 @@ public class PreferencesTest {
     @Test
     public void testAutoDeleteLocal() {
         clickPreference(R.string.downloads_pref);
-        final boolean initialAutoDelete = UserPreferences.isAutoDeleteLocal();
-        assertFalse(initialAutoDelete);
+        onView(withText(R.string.pref_auto_delete_title)).perform(click());
+        onView(withText(R.string.pref_auto_delete_playback_title)).perform(click());
+        assertTrue(UserPreferences.isAutoDelete());
+        assertFalse(UserPreferences.isAutoDeleteLocal());
 
         onView(withText(R.string.pref_auto_local_delete_title)).perform(click());
         onView(withText(R.string.yes)).perform(click());
@@ -307,7 +292,7 @@ public class PreferencesTest {
     @Test
     public void testEpisodeCleanupFavoriteOnly() {
         clickPreference(R.string.downloads_pref);
-        onView(withText(R.string.pref_automatic_download_title)).perform(click());
+        onView(withText(R.string.pref_auto_delete_title)).perform(click());
         onView(withText(R.string.pref_episode_cleanup_title)).perform(click());
         onView(withId(R.id.select_dialog_listview)).perform(swipeDown());
         onView(withText(R.string.episode_cleanup_except_favorite_removal)).perform(click());
@@ -318,7 +303,7 @@ public class PreferencesTest {
     @Test
     public void testEpisodeCleanupQueueOnly() {
         clickPreference(R.string.downloads_pref);
-        onView(withText(R.string.pref_automatic_download_title)).perform(click());
+        onView(withText(R.string.pref_auto_delete_title)).perform(click());
         onView(withText(R.string.pref_episode_cleanup_title)).perform(click());
         onView(withId(R.id.select_dialog_listview)).perform(swipeDown());
         onView(withText(R.string.episode_cleanup_queue_removal)).perform(click());
@@ -329,7 +314,7 @@ public class PreferencesTest {
     @Test
     public void testEpisodeCleanupNeverAlg() {
         clickPreference(R.string.downloads_pref);
-        onView(withText(R.string.pref_automatic_download_title)).perform(click());
+        onView(withText(R.string.pref_auto_delete_title)).perform(click());
         onView(withText(R.string.pref_episode_cleanup_title)).perform(click());
         onView(withId(R.id.select_dialog_listview)).perform(swipeUp());
         onView(withText(R.string.episode_cleanup_never)).perform(click());
@@ -340,7 +325,7 @@ public class PreferencesTest {
     @Test
     public void testEpisodeCleanupClassic() {
         clickPreference(R.string.downloads_pref);
-        onView(withText(R.string.pref_automatic_download_title)).perform(click());
+        onView(withText(R.string.pref_auto_delete_title)).perform(click());
         onView(withText(R.string.pref_episode_cleanup_title)).perform(click());
         onView(withText(R.string.episode_cleanup_after_listening)).perform(click());
         Awaitility.await().atMost(1000, MILLISECONDS)
@@ -357,7 +342,7 @@ public class PreferencesTest {
     @Test
     public void testEpisodeCleanupNumDays() {
         clickPreference(R.string.downloads_pref);
-        clickPreference(R.string.pref_automatic_download_title);
+        onView(withText(R.string.pref_auto_delete_title)).perform(click());
         clickPreference(R.string.pref_episode_cleanup_title);
         String search = res.getQuantityString(R.plurals.episode_cleanup_days_after_listening, 3, 3);
         onView(withText(search)).perform(scrollTo());

@@ -22,7 +22,7 @@
   <string name="episode_cache_full_message">Le nombre maximal d\'épisodes téléchargés a été atteint. Vous pouvez changer ce nombre dans les paramètres.</string>
   <string name="years_statistics_label">Années</string>
   <string name="notification_pref_fragment">Notifications</string>
-  <string name="recently_played_episodes">Derniers épisodes lus</string>
+  <string name="current_playing_episode">En cours</string>
   <!--Google Assistant-->
   <string name="app_action_not_found">\"%1$s\" non trouvé</string>
   <!--SwipeActions-->
@@ -59,6 +59,7 @@
   <string name="deny_label">Refuser</string>
   <string name="open_settings">Ouvrir les préférences</string>
   <string name="configure_home">Paramétrer l\'accueil</string>
+  <string name="section_hidden">Non affiché</string>
   <!--Download Statistics fragment-->
   <string name="total_size_downloaded_podcasts">Utilisé sur l\'appareil par les épisodes</string>
   <!--Main activity-->
@@ -100,20 +101,19 @@
   <string name="support_podcast">Soutenir ce podcast :</string>
   <string name="error_label">Erreur</string>
   <string name="error_msg_prefix">Une erreur a eu lieu :</string>
-  <string name="refresh_label">Rafraîchir</string>
+  <string name="refresh_label">Actualiser</string>
   <string name="chapters_label">Chapitres</string>
   <string name="no_chapters_label">Aucun chapitre</string>
   <string name="chapter_duration">Durée : %1$s</string>
   <string name="description_label">Description</string>
   <string name="shownotes_label">Notes</string>
   <string name="shownotes_contentdescription">Glisser vers le haut pour lire les notes d\'épisode</string>
-  <string name="episodes_suffix">\u0020épisodes</string>
   <string name="close_label">Fermer</string>
   <string name="retry_label">Réessayer</string>
   <string name="auto_download_label">Téléchargement automatique</string>
   <string name="auto_delete_label">Suppression automatique des épisodes</string>
   <string name="feed_volume_adapdation">Ajustement du volume</string>
-  <string name="feed_volume_adaptation_summary">Ajustement du volume des épisodes : %1$s</string>
+  <string name="feed_volume_adaptation_summary">Ajuster le volume des épisodes : %1$s</string>
   <string name="feed_volume_reduction_off">Aucun ajustement</string>
   <string name="feed_volume_reduction_light">Faible atténuation</string>
   <string name="feed_volume_reduction_heavy">Forte atténuation</string>
@@ -123,6 +123,7 @@
   <string name="feed_auto_download_always">Toujours</string>
   <string name="feed_auto_download_never">Jamais</string>
   <string name="feed_new_episodes_action_add_to_inbox">Ajouter à la boîte de réception</string>
+  <string name="feed_new_episodes_action_add_to_queue">Ajouter à la liste de lecture</string>
   <string name="feed_new_episodes_action_nothing">Ne rien faire</string>
   <string name="episode_cleanup_never">Jamais</string>
   <string name="episode_cleanup_except_favorite_removal">Quand pas un favori</string>
@@ -174,7 +175,6 @@
   <string name="remove_feed_label">Supprimer le podcast</string>
   <string name="share_label">Partager</string>
   <string name="share_file_label">Partager le fichier</string>
-  <string name="share_rss_address_label">Lien RSS :</string>
   <string name="feed_delete_confirmation_msg">Confirmer que vous voulez supprimer le podcast \"%1$s\", TOUS ses épisodes (y compris ceux téléchargés) et ses statistiques.</string>
   <string name="feed_delete_confirmation_msg_batch">Confirmer que vous voulez supprimer les podcasts sélectionnés, TOUS leurs épisodes (y compris ceux téléchargés) et leurs statistiques.</string>
   <string name="feed_delete_confirmation_local_msg">Merci de confirmer que vous voulez supprimer le podcast \"%1$s\" et ses statistiques. Les fichiers du dossier local  / source ne seront pas effacés.</string>
@@ -184,7 +184,7 @@
   <string name="select_all_above">Sélectionner avec ceux au-dessus</string>
   <string name="select_all_below">Sélectionner avec ceux en-dessous</string>
   <string name="filtered_label">Filtré</string>
-  <string name="refresh_failed_msg">{fa-exclamation-circle} La dernière mise à jour a échoué. Taper pour plus de détails.</string>
+  <string name="refresh_failed_msg">La dernière mise à jour a échoué. Taper pour plus de détails.</string>
   <string name="open_podcast">Ouvrir le podcast</string>
   <string name="please_wait_for_data">Merci d\'attendre la fin du téléchargement des données</string>
   <string name="updates_disabled_label">Mises à jour désactivées</string>
@@ -209,8 +209,6 @@
   <string name="pause_label">Pause</string>
   <string name="stream_label">Streaming</string>
   <string name="delete_label">Supprimer</string>
-  <string name="delete_failed">Suppression du fichier impossible. Redémarrer pourrait aider.</string>
-  <string name="delete_local_failed">Impossible de supprimer le fichier. Essayer de reconnecter le dossier local à partir de l\'écran des infos du podcast.</string>
   <string name="delete_episode_label">Suppression de l\'épisode</string>
   <plurals name="deleted_multi_episode_batch_label">
     <item quantity="one">1  épisode téléchargé supprimé.</item>
@@ -303,7 +301,7 @@
   <string name="download_type_feed">Flux</string>
   <string name="download_type_media">Fichier média</string>
   <string name="null_value_podcast_error">Aucun podcast correspondant.</string>
-  <string name="no_feed_url_podcast_found_by_search">Le podcast suggéré ne donne pas de lien RSS mais AntennaPod a trouvé un lien qui pourrait correspondre</string>
+  <string name="no_feed_url_podcast_found_by_search">Le podcast suggéré n\'a pas de flux RSS mais AntennaPod a trouvé un lien qui pourrait correspondre</string>
   <string name="authentication_notification_title">Authentification requise</string>
   <string name="confirm_mobile_download_dialog_title">Confirmer le téléchargement avec la connexion mobile</string>
   <string name="confirm_mobile_download_dialog_message">Le téléchargement avec la connexion mobile est désactivé dans les options. AntennaPod peut télécharger l\'épisode automatiquement plus tard quand le Wifi sera disponible.</string>
@@ -316,11 +314,6 @@
   <string name="confirm_mobile_streaming_button_once">Une seule fois</string>
   <!--Mediaplayer messages-->
   <string name="playback_error_generic"><![CDATA[Le fichier de média n\'a pas pu être lu.\n\n- Essayez de le supprimer et de télécharger l\'épisode à nouveau.\n- Vérifier votre connexion, et assurez-vous que l\'accès n\'est pas bloqué par un VPN ou une page de connexion.\n- Essayez de faire un appui long et partager le lien du fichier à votre navigateur pour contrôler si l\'épisode peut être lu. Si ce n\'est pas le cas, contactez le créateur du podcast.]]></string>
-  <string name="playback_error_server_died">Le serveur ne répond pas</string>
-  <string name="playback_error_unsupported">Format de média non géré</string>
-  <string name="playback_error_timeout">L\'opération a expiré</string>
-  <string name="playback_error_source">Impossible d\'accéder au fichier</string>
-  <string name="playback_error_unknown">Erreur inconnue</string>
   <string name="no_media_playing_label">Aucune lecture</string>
   <string name="unknown_media_key">AntennaPod - Touche média inconnue : %1$d</string>
   <string name="error_file_not_found">Fichier non trouvé</string>
@@ -480,10 +473,9 @@
   <string name="pref_expandNotify_sum">Permet, généralement, d\'étendre la notification pour montrer les boutons de lecture</string>
   <string name="pref_persistNotify_title">Boutons de lecture permanents</string>
   <string name="pref_persistNotify_sum">Garder les notifications et les boutons de lecture sur l\'écran de verrouillage quand la lecture est en pause</string>
-  <string name="pref_compact_notification_buttons_title">Boutons pour la notification réduite</string>
-  <string name="pref_compact_notification_buttons_sum">Définir les boutons de lecture quand la notification est réduite. Le bouton de lecture/pause est toujours affiché.</string>
-  <string name="pref_compact_notification_buttons_dialog_title">Choisir un maximum de %1$d éléments</string>
-  <string name="pref_compact_notification_buttons_dialog_error">Vous ne pouvez pas choisir plus de %1$d éléments.</string>
+  <string name="pref_compact_notification_buttons_dialog_error_exact">Vous devez choisir exactement 2 options</string>
+  <string name="pref_full_notification_buttons_title">Boutons pour les notifications</string>
+  <string name="pref_full_notification_buttons_sum">Changer les boutons pour la notification de lecture</string>
   <string name="pref_enqueue_location_title">Emplacement des épisodes téléchargés</string>
   <string name="pref_enqueue_location_sum">Ajouter les épisodes : %1$s</string>
   <string name="enqueue_location_back">en fin de liste</string>
@@ -550,7 +542,7 @@
   <string name="sync_status_episodes_download">Import des statuts des épisodes...</string>
   <string name="sync_status_upload_played">Export des statuts de lecture...</string>
   <string name="sync_status_subscriptions">Synchronisation des abonnements...</string>
-  <string name="sync_status_wait_for_downloads">En attente que la récupération des données finissent...</string>
+  <string name="sync_status_wait_for_downloads">En attente que la récupération des données se termine...</string>
   <string name="sync_status_success">Synchronisation réussie</string>
   <string name="sync_status_error">Échec de la synchronisation</string>
   <!--import and export-->
@@ -565,13 +557,16 @@
   <string name="database_import_summary">Importer une base de données AntennaPod d\'un autre appareil</string>
   <string name="opml_import_label">Importer un fichier OPML</string>
   <string name="opml_add_podcast_label">Importer une liste de podcasts (fichier OPML)</string>
-  <string name="opml_reader_error">Une erreur s\'est produite pendant la lecture du fichier OPML :</string>
+  <string name="opml_reader_error">Une erreur s\'est produite lors de la lecture du fichier. Assurez-vous d\'avoir bien sélectionné un fichier OPML valide.</string>
   <string name="opml_import_error_no_file">Aucun fichier sélectionné !</string>
   <string name="select_all_label">Tout choisir</string>
   <string name="deselect_all_label">Ne rien choisir</string>
   <string name="opml_export_label">Exporter un fichier OPML</string>
   <string name="html_export_label">Exporter un fichier HTML</string>
   <string name="database_export_label">Exporter la base de données</string>
+  <string name="automatic_database_export_label">Export automatique de la base de données</string>
+  <string name="automatic_database_export_summary">Créer une sauvegarde de la base de données tous les 3 jours. Uniquement les 5 dernières sauvegardes seront conservées.</string>
+  <string name="automatic_database_export_error">Erreur lors de la sauvegarde automatique de la base de données</string>
   <string name="database_import_label">Importer la base de données</string>
   <string name="database_import_warning">Importer une base de données remplacera tout vos abonnements et votre historique de lecture. Il est conseillé d\'exporter votre base de données actuelle pour avoir une sauvegarde. Confirmez-vous l\'import ?</string>
   <string name="please_wait">Merci de patienter...</string>
@@ -616,7 +611,7 @@
     <item quantity="other">%d jours</item>
   </plurals>
   <string name="auto_enable_label">Activation automatique lorsque la lecture commence</string>
-  <string name="auto_enable_label_with_times">Activer automatiquement lorsque la lecture commence entre %s et %s</string>
+  <string name="auto_enable_label_with_times">Activer automatiquement lorsque la lecture commence entre %1$s et %2$s</string>
   <string name="auto_enable_change_times">Changer la plage horaire</string>
   <string name="sleep_timer_enabled_label">Arrêt automatique activé</string>
   <!--Synchronisation-->
@@ -662,6 +657,13 @@
   <string name="choose_data_directory_available_space">%1$s sur %2$s d\'espace libre</string>
   <string name="pref_pausePlaybackForFocusLoss_sum">Mettre en pause la lecture au lieu de baisser le volume quand une autre application joue un son</string>
   <string name="pref_pausePlaybackForFocusLoss_title">Mettre en pause lors d\'interruptions</string>
+  <!--Rating dialog-->
+  <string name="rating_tagline">Depuis le %1$s, vous avez écouté %2$s%3$d%4$s heures de podcasts.</string>
+  <string name="rating_contribute_label">Vous voulez nous rejoindre ? Vous le pouvez par de la traduction, du support, du design ou du code et nous en serions heureux !</string>
+  <string name="rating_contribute_button">Découvrir comment aider</string>
+  <string name="rating_volunteers_label">AntennaPod est développé par des volontaires durant leurs temps libre. Si vous aimez ce que nous faisons, nous serions ravi si vous nous laisser une bonne note.</string>
+  <string name="rating_rate">Noter AntennaPod</string>
+  <string name="rating_later">Plus tard</string>
   <!--Online feed view-->
   <string name="subscribe_label">S\'abonner</string>
   <string name="subscribing_label">Abonnement en cours...</string>
@@ -694,7 +696,7 @@
   <string name="feed_tags_label">Tags</string>
   <string name="feed_tags_summary">Modifier les tags de ce podcast pour classer vos abonnements</string>
   <string name="feed_folders_include_root">Montrer dans la liste principale</string>
-  <string name="multi_feed_common_tags_info">{fa-info-circle} Seul les tags communs à tous les abonnements sélectionnés sont montrés. Les autres tags ne seront pas modifiés.</string>
+  <string name="multi_feed_common_tags_info">Seul les tags communs à tous les abonnements sélectionnés sont montrés. Les autres tags ne seront pas modifiés.</string>
   <string name="auto_download_settings_label">Préférence de téléchargement automatique</string>
   <string name="episode_filters_label">Filtre d\'épisode</string>
   <string name="episode_filters_description">Liste de mots permettant de décider si un épisode est à inclure ou à exclure des téléchargements automatiques</string>
@@ -710,9 +712,25 @@
   <string name="statistics_episodes_on_device">Épisode(s) sur l\'appareil :</string>
   <string name="statistics_space_used">Espace utilisé :</string>
   <string name="statistics_episodes_started_total">Épisodes démarrés / total :</string>
+  <string name="statistics_expected_next_episode">Prochain épisode attendu au :</string>
+  <string name="statistics_expected_next_episode_any_day">Imminent, à tout moment</string>
+  <string name="statistics_expected_next_episode_unknown">Inconnu, pas d\'estimation</string>
   <string name="statistics_view_all">Voir les statistiques pour tous les podcasts »</string>
   <string name="edit_url_menu">Modifier le lien</string>
   <string name="edit_url_confirmation_msg">Modifier le lien RSS peut facilement corrompre l\'état de lecture et la liste des épisodes du podcast. Il est recommandé de NE PAS LE CHANGER et AUCUNE AIDE ne pourra être fournie si quelque chose se passe mal. Cette action ne peut pas être annulée. L\'abonnement NE POURRA PAS ÊTRE RÉPARÉ en remettant juste l\'ancien lien. Il est recommandé de CRÉER UNE SAUVEGARDE avant de continuer.</string>
+  <!--Podcast release schedules-->
+  <string name="release_schedule_daily">tous les jours</string>
+  <string name="release_schedule_weekdays">tous les weekends</string>
+  <string name="release_schedule_weekly">toutes les semaines</string>
+  <string name="release_schedule_biweekly">toutes les deux semaines</string>
+  <string name="release_schedule_monthly">tous les mois</string>
+  <string name="release_schedule_monday">lundi</string>
+  <string name="release_schedule_tuesday">mardi</string>
+  <string name="release_schedule_wednesday">mercredi</string>
+  <string name="release_schedule_thursday">jeudi</string>
+  <string name="release_schedule_friday">vendredi</string>
+  <string name="release_schedule_saturday">samedi</string>
+  <string name="release_schedule_sunday">dimanche</string>
   <!--AntennaPodSP-->
   <string name="sp_apps_importing_feeds_msg">Importation des abonnements à partir d\'applications à usage unique...</string>
   <!--Add podcast fragment-->
@@ -720,9 +738,8 @@
   <string name="search_itunes_label">Chercher sur Apple Podcasts</string>
   <string name="search_podcastindex_label">Chercher sur Podcast Index</string>
   <string name="search_fyyd_label">Chercher sur fyyd</string>
-  <string name="gpodnet_search_hint">Chercher sur gpodder.net</string>
   <string name="advanced">Avancé</string>
-  <string name="add_podcast_by_url">Ajouter un lien RSS</string>
+  <string name="add_podcast_by_url">Ajouter un podcast à partir de son lien RSS</string>
   <string name="discover">Découvrir</string>
   <string name="discover_hide">Ne pas montrer</string>
   <string name="discover_is_hidden">Vous avez choisi de cacher les suggestions.</string>
@@ -751,23 +768,7 @@
   <string name="not_paused">Pas en en pause</string>
   <string name="hide_played_episodes_label">Lu</string>
   <string name="not_played">Non lu</string>
-  <!--Sort-->
-  <string name="sort_title_a_z">Titre (A \u2192 Z)</string>
-  <string name="sort_title_z_a">Titre (Z \u2192 A)</string>
-  <string name="sort_date_new_old">Date (Récent \u2192 Ancien)</string>
-  <string name="sort_date_old_new">Date (Ancien \u2192 Récent)</string>
-  <string name="sort_duration_short_long">Durée (Courte \u2192 Longue)</string>
-  <string name="sort_duration_long_short">Durée (Longue \u2192 Courte)</string>
-  <string name="sort_filename_a_z">Nom de fichier (A \u2192 Z)</string>
-  <string name="sort_filename_z_a">Nom de fichier (Z \u2192 A)</string>
-  <string name="sort_a_z">A \u2192 Z</string>
-  <string name="sort_z_a">Z \u2192 A</string>
-  <string name="sort_new_old">Récent \u2192 Ancien</string>
-  <string name="sort_old_new">Ancien \u2192 Récent</string>
-  <string name="sort_short_long">Court \u2192 Long</string>
-  <string name="sort_long_short">Long \u2192 Court</string>
-  <string name="sort_small_large">Petit \u2192 Grand</string>
-  <string name="sort_large_small">Grand \u2192 Petit</string>
+  <string name="filename">Nom de fichier</string>
   <!--Share episode dialog-->
   <string name="share_playback_position_dialog_label">Inclure la position de lecture</string>
   <string name="share_dialog_episode_website_label">Lien de la page web de l\'épisode</string>
@@ -778,7 +779,6 @@
   <!--Audio controls-->
   <string name="audio_controls">Contrôles audio</string>
   <string name="playback_speed">Vitesse de lecture</string>
-  <string name="audio_effects">Effets audio</string>
   <string name="player_switch_to_audio_only">Audio seulement</string>
   <!--proxy settings-->
   <string name="proxy_type_label">Type</string>
